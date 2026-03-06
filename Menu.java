@@ -30,7 +30,22 @@ public class Menu extends JFrame {
 	Customer e;
 
 	private JPanel createUserTypePanel(ButtonGroup userType) {
-		return new JPanel();
+		JPanel userTypePanel = new JPanel();
+		JRadioButton radioButton;
+
+		userTypePanel.add(radioButton = new JRadioButton("Existing Customer"));
+		radioButton.setActionCommand("Customer");
+		userType.add(radioButton);
+
+		userTypePanel.add(radioButton = new JRadioButton("Administrator"));
+		radioButton.setActionCommand("Administrator");
+		userType.add(radioButton);
+
+		userTypePanel.add(radioButton = new JRadioButton("New Customer"));
+		radioButton.setActionCommand("New Customer");
+		userType.add(radioButton);
+
+		return userTypePanel;
 	};
 
 	private JPanel createContinuePanel(ButtonGroup userType) {
