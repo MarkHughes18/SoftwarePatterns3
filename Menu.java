@@ -32,9 +32,6 @@ public class Menu extends JFrame {
 	private void handleNewCustomerSelection() {
 	};
 
-	private void handleCustomerLogin() {
-	};
-
 	JPanel panel2;
 	JButton add;
 	String PPS, firstName, surname, DOB, CustomerID;
@@ -173,6 +170,61 @@ public class Menu extends JFrame {
 			admin();
 		}
 	};
+
+	private void handleCustomerLogin() {
+		boolean loop = true;
+		boolean loop2 = true;
+		boolean cont = false;
+		Customer foundCustomer = null;
+
+		while (loop) {
+			Object customerID = JOptionPane.showInputDialog(f, "Please enter your Customer ID:");
+
+			foundCustomer = findCustomerById(customerID.toString());
+			if (foundCustomer == null) {
+				int reply = JOptionPane.showConfirmDialog(
+						null,
+						null,
+						"Customer ID not recognised. Try again?",
+						JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+					loop = true;
+				} else if (reply == JOptionPane.NO_OPTION) {
+					f1.dispose();
+					loop = false;
+					loop2 = false;
+					menuStart();
+				}
+			} else {
+				loop = false;
+			}
+		}
+
+		while (loop2) {
+			Object customerPassword = JOptionPane.showInputDialog(f, "Please enter your password:");
+
+			if (!foundCustomer.getPassword().equals(customerPassword)) {
+				int reply = JOptionPane.showConfirmDialog(
+						null,
+						null,
+						"Password not recognised. Try again?",
+						JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.NO_OPTION) {
+					f1.dispose();
+					loop2 = false;
+					menuStart();
+				}
+			} else {
+				loop2 = false;
+				cont = true;
+			}
+		}
+
+		if (cont) {
+			f.dispose();
+			customer(foundCustomer);
+		}
+	}
 
 	public void admin() {
 		dispose();
