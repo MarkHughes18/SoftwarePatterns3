@@ -29,19 +29,25 @@ public class Menu extends JFrame {
 	Container content;
 	Customer e;
 
-	private JFrame createUserTypeFrame();
+	private JPanel createUserTypePanel(ButtonGroup userType) {
+		return new JPanel();
+	};
 
-	private JPanel createUserTypePanel(ButtonGroup userType);
+	private JPanel createContinuePanel(ButtonGroup userType) {
+		return new JPanel();
+	};
 
-	private JPanel createContinuePanel(ButtonGroup userType);
+	private void handleUserSelection(String user) {
+	};
 
-	private void handleUserSelection(String user);
+	private void handleNewCustomerSelection() {
+	};
 
-	private void handleNewCustomerSelection();
+	private void handleAdministratorLogin() {
+	};
 
-	private void handleAdministratorLogin();
-
-	private void handleCustomerLogin();
+	private void handleCustomerLogin() {
+	};
 
 	JPanel panel2;
 	JButton add;
@@ -55,6 +61,28 @@ public class Menu extends JFrame {
 	public void menuStart() {
 		f = createUserTypeFrame();
 		f.setVisible(true);
+	}
+
+	private JFrame createUserTypeFrame() {
+		JFrame frame = new JFrame("User Type");
+		frame.setSize(400, 300);
+		frame.setLocation(200, 200);
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
+
+		ButtonGroup userType = new ButtonGroup();
+		JPanel userTypePanel = createUserTypePanel(userType);
+		JPanel continuePanel = createContinuePanel(userType);
+
+		Container content = frame.getContentPane();
+		content.setLayout(new GridLayout(2, 1));
+		content.add(userTypePanel);
+		content.add(continuePanel);
+
+		return frame;
 	}
 
 	public void admin() {
