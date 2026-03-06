@@ -29,9 +29,6 @@ public class Menu extends JFrame {
 	Container content;
 	Customer e;
 
-	private void handleUserSelection(String user) {
-	};
-
 	private void handleNewCustomerSelection() {
 	};
 
@@ -113,6 +110,16 @@ public class Menu extends JFrame {
 		});
 		return continuePanel;
 	};
+
+	private void handleUserSelection(String user) {
+		if (user.equals("New Customer")) {
+			handleNewCustomerSelection();
+		} else if (user.equals("Administrator")) {
+			handleAdministratorLogin();
+		} else if (user.equals("Customer")) {
+			handleCustomerLogin();
+		}
+	}
 
 	public void admin() {
 		dispose();
