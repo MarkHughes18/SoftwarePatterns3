@@ -32,9 +32,6 @@ public class Menu extends JFrame {
 	private void handleNewCustomerSelection() {
 	};
 
-	private void handleAdministratorLogin() {
-	};
-
 	private void handleCustomerLogin() {
 	};
 
@@ -120,6 +117,62 @@ public class Menu extends JFrame {
 			handleCustomerLogin();
 		}
 	}
+
+	private void handleAdministratorLogin() {
+		boolean loop = true;
+		boolean loop2 = true;
+		boolean cont = false;
+
+		while (loop) {
+			Object adminUsername = JOptionPane.showInputDialog(f, "Please enter administrator username:");
+
+			if (!adminUsername.equals("admin")) {
+				int reply = JOptionPane.showConfirmDialog(
+						null,
+						null,
+						"Username not recognised. Try again?",
+						JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+					loop = true;
+				} else if (reply == JOptionPane.NO_OPTION) {
+					if (f1 != null) {
+						f1.dispose();
+					}
+					loop = false;
+					loop2 = false;
+					menuStart();
+				}
+			} else {
+				loop = false;
+			}
+		}
+
+		while (loop2) {
+			Object adminPassword = JOptionPane.showInputDialog(f, "Please enter administrator password:");
+
+			if (!adminPassword.equals("admin11")) {
+				int reply = JOptionPane.showConfirmDialog(null, null, "Password not recognised. Try again?",
+						JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.NO_OPTION) {
+					if (f1 != null) {
+						f1.dispose();
+					}
+					loop2 = false;
+					menuStart();
+				}
+			} else {
+				loop2 = false;
+				cont = true;
+			}
+		}
+
+		if (cont) {
+			if (f1 != null) {
+				f1.dispose();
+			}
+			admin();
+		}
+	};
 
 	public void admin() {
 		dispose();
