@@ -28,10 +28,6 @@ public class Menu extends JFrame {
 	JTextField customerIDTextField, passwordTextField;
 	Container content;
 	Customer e;
-
-	private void handleNewCustomerSelection() {
-	};
-
 	JPanel panel2;
 	JButton add;
 	String PPS, firstName, surname, DOB, CustomerID;
@@ -224,6 +220,65 @@ public class Menu extends JFrame {
 			f.dispose();
 			customer(foundCustomer);
 		}
+	}
+
+	private void handleNewCustomerSelection() {
+		f.dispose();
+		f1 = new JFrame("Create new Customer");
+		f1.setSize(400, 300);
+		f1.setLocation(200, 200);
+		f1.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
+
+		Container content = f1.getContentPane();
+		content.setLayout(new BorderLayout());
+
+		firstNameLabel = new JLabel("First Name:", SwingConstants.RIGHT);
+		surnameLabel = new JLabel("Surname:", SwingConstants.RIGHT);
+		pPPSLabel = new JLabel("PPS Number:", SwingConstants.RIGHT);
+		dOBLabel = new JLabel("Date of birth", SwingConstants.RIGHT);
+
+		firstNameTextField = new JTextField(20);
+		surnameTextField = new JTextField(20);
+		pPSTextField = new JTextField(20);
+		dOBTextField = new JTextField(20);
+
+		JPanel textPanel = new JPanel(new GridLayout(6, 2));
+		textPanel.add(firstNameLabel);
+		textPanel.add(firstNameTextField);
+		textPanel.add(surnameLabel);
+		textPanel.add(surnameTextField);
+		textPanel.add(pPPSLabel);
+		textPanel.add(pPSTextField);
+		textPanel.add(dOBLabel);
+		textPanel.add(dOBTextField);
+
+		JPanel textPanel2 = new JPanel();
+		add = new JButton("Add Customer");
+		JButton cancel = new JButton("Cancel");
+
+		add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleAddNewCustomer();
+			}
+		});
+
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				f1.dispose();
+				menuStart();
+			}
+		});
+
+		textPanel2.add(add);
+		textPanel2.add(cancel);
+
+		content.add(textPanel, BorderLayout.CENTER);
+		content.add(textPanel2, BorderLayout.SOUTH);
+		f1.setVisible(true);
 	}
 
 	public void admin() {
