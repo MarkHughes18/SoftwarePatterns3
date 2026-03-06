@@ -29,29 +29,6 @@ public class Menu extends JFrame {
 	Container content;
 	Customer e;
 
-	private JPanel createUserTypePanel(ButtonGroup userType) {
-		JPanel userTypePanel = new JPanel();
-		JRadioButton radioButton;
-
-		userTypePanel.add(radioButton = new JRadioButton("Existing Customer"));
-		radioButton.setActionCommand("Customer");
-		userType.add(radioButton);
-
-		userTypePanel.add(radioButton = new JRadioButton("Administrator"));
-		radioButton.setActionCommand("Administrator");
-		userType.add(radioButton);
-
-		userTypePanel.add(radioButton = new JRadioButton("New Customer"));
-		radioButton.setActionCommand("New Customer");
-		userType.add(radioButton);
-
-		return userTypePanel;
-	};
-
-	private JPanel createContinuePanel(ButtonGroup userType) {
-		return new JPanel();
-	};
-
 	private void handleUserSelection(String user) {
 	};
 
@@ -99,6 +76,43 @@ public class Menu extends JFrame {
 
 		return frame;
 	}
+
+	private JPanel createUserTypePanel(ButtonGroup userType) {
+		JPanel userTypePanel = new JPanel();
+		JRadioButton radioButton;
+
+		userTypePanel.add(radioButton = new JRadioButton("Existing Customer"));
+		radioButton.setActionCommand("Customer");
+		userType.add(radioButton);
+
+		userTypePanel.add(radioButton = new JRadioButton("Administrator"));
+		radioButton.setActionCommand("Administrator");
+		userType.add(radioButton);
+
+		userTypePanel.add(radioButton = new JRadioButton("New Customer"));
+		radioButton.setActionCommand("New Customer");
+		userType.add(radioButton);
+
+		return userTypePanel;
+	};
+
+	private JPanel createContinuePanel(ButtonGroup userType) {
+		JPanel continuePanel = new JPanel();
+		JButton continueButton = new JButton("Continue");
+		continuePanel.add(continueButton);
+
+		continueButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				if (userType.getSelection() == null) {
+					JOptionPane.showMessageDialog(f, "Please select a yser type.");
+					return;
+				}
+				String selection = userType.getSelection().getActionCommand();
+				handleUserSelection(user);
+			}
+		});
+		return continuePanel;
+	};
 
 	public void admin() {
 		dispose();
