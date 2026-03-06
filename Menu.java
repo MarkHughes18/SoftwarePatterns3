@@ -29,6 +29,20 @@ public class Menu extends JFrame {
 	Container content;
 	Customer e;
 
+	private JFrame createUserTypeFrame();
+
+	private JPanel createUserTypePanel(ButtonGroup userType);
+
+	private JPanel createContinuePanel(ButtonGroup userType);
+
+	private void handleUserSelection(String user);
+
+	private void handleNewCustomerSelection();
+
+	private void handleAdministratorLogin();
+
+	private void handleCustomerLogin();
+
 	JPanel panel2;
 	JButton add;
 	String PPS, firstName, surname, DOB, CustomerID;
