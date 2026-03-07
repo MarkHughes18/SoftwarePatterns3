@@ -332,9 +332,117 @@ public class Menu extends JFrame {
 	}
 
 	private JFrame createAdminFrame() {
+		JFrame frame = new JFrame("Administrator Menu");
+		frame.setSize(400, 400);
+		frame.setLocation(200, 200);
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
+
+		JPanel deleteCustomerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton deleteCustomer = createAdminButton("Delete Customer");
+		deleteCustomerPanel.add(deleteCustomer);
+
+		JPanel bankChargesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton bankChargesButton = createAdminButton("Apply Bank Charges");
+		bankChargesPanel.add(bankChargesButton);
+
+		JPanel interestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton interestButton = createAdminButton("Apply Interest");
+		interestPanel.add(interestButton);
+
+		JPanel editCustomerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton editCustomerButton = createAdminButton("Edit existing Customer");
+		editCustomerPanel.add(editCustomerButton);
+
+		JPanel navigatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton navigateButton = createAdminButton("Navigate Customer Collection");
+		navigatePanel.add(navigateButton);
+
+		JPanel summaryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton summaryButton = createAdminButton("Display Summary Of All Accounts");
+		summaryPanel.add(summaryButton);
+
+		JPanel accountPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton accountButton = createAdminButton("Add an Account to a Customer");
+		accountPanel.add(accountButton);
+
+		JPanel returnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JButton returnButton = new JButton("Exit Admin Menu");
+		returnPanel.add(returnButton);
+
+		JLabel label1 = new JLabel("Please select an option");
+
+		Container contentPane = frame.getContentPane();
+		contentPane.setLayout(new GridLayout(9, 1));
+		contentPane.add(label1);
+		contentPane.add(accountPanel);
+		contentPane.add(bankChargesPanel);
+		contentPane.add(interestPanel);
+		contentPane.add(editCustomerPanel);
+		contentPane.add(navigatePanel);
+		contentPane.add(summaryPanel);
+		contentPane.add(deleteCustomerPanel);
+		contentPane.add(returnPanel);
+
+		deleteCustomer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleDeleteCustomer();
+			}
+		});
+
+		bankChargesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleApplyBankCharges();
+			}
+		});
+
+		interestButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleApplyInterest();
+			}
+		});
+
+		editCustomerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleEditCustomer();
+			}
+		});
+
+		navigateButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleNavigateCustomers();
+			}
+		});
+
+		summaryButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleDisplaySummary();
+			}
+		});
+
+		accountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleAddAccount();
+			}
+		});
+
+		returnButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				f.dispose();
+				menuStart();
+			}
+		});
+
+		return frame;
 	}
 
 	private JButton createAdminButton(String text) {
+		JButton button = new JButton(text);
+		button.setPreferredSize(new Dimension(250, 20));
+		return button;
 	}
 
 	private void handleApplyBankCharges() {
