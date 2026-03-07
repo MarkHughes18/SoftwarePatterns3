@@ -1295,6 +1295,69 @@ public class Menu extends JFrame {
 	}
 
 	private void showCustomerOperationsMenu(Customer customer, CustomerAccount account) {
+		f = new JFrame("Customer Menu");
+		f.setSize(400, 300);
+		f.setLocation(200, 200);
+		f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
+		f.setVisible(true);
+
+		JPanel statementPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton statementButton = new JButton("Display Bank Statement");
+		statementButton.setPreferredSize(new Dimension(250, 20));
+		statementPanel.add(statementButton);
+
+		JPanel lodgementPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton lodgementButton = new JButton("Lodge money into account");
+		lodgementButton.setPreferredSize(new Dimension(250, 20));
+		lodgementPanel.add(lodgementButton);
+
+		JPanel withdrawalPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JButton withdrawButton = new JButton("Withdraw money from account");
+		withdrawButton.setPreferredSize(new Dimension(250, 20));
+		withdrawalPanel.add(withdrawButton);
+
+		JPanel returnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JButton returnButton = new JButton("Exit Customer Menu");
+		returnPanel.add(returnButton);
+
+		JLabel label1 = new JLabel("Please select an option");
+
+		Container contentPane = f.getContentPane();
+		contentPane.setLayout(new GridLayout(5, 1));
+		contentPane.add(label1);
+		contentPane.add(statementPanel);
+		contentPane.add(lodgementPanel);
+		contentPane.add(withdrawalPanel);
+		contentPane.add(returnPanel);
+
+		statementButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleDisplayStatement(customer, account);
+			}
+		});
+
+		lodgementButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleLodgement(customer, account);
+			}
+		});
+
+		withdrawButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				handleWithdrawal(customer, account);
+			}
+		});
+
+		returnButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				f.dispose();
+				menuStart();
+			}
+		});
 	}
 
 	private void handleDisplayStatement(Customer customer, CustomerAccount account) {
