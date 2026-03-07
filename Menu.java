@@ -1209,6 +1209,73 @@ public class Menu extends JFrame {
 	}
 
 	private void showCustomerAccountSelection(Customer customer) {
+		f = new JFrame("Customer Menu");
+		f.setSize(400, 300);
+		f.setLocation(200, 200);
+		f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
+		f.setVisible(true);
+
+		if (customer.getAccounts().size() == 0) {
+			JOptionPane.showMessageDialog(
+					f,
+					"This customer does not have any accounts yet. \n An admin must create an account for this customer \n for them to be able to use customer functionality.",
+					"Oops!",
+					JOptionPane.INFORMATION_MESSAGE);
+			f.dispose();
+			menuStart();
+			return;
+		}
+
+		JPanel buttonPanel = new JPanel();
+		JPanel boxPanel = new JPanel();
+		JPanel labelPanel = new JPanel();
+
+		JLabel label = new JLabel("Select Account:");
+		labelPanel.add(label);
+
+		JButton returnButton = new JButton("Return");
+		JButton continueButton = new JButton("Continue");
+
+		buttonPanel.add(returnButton);
+		buttonPanel.add(continueButton);
+
+		JComboBox<String> box = new JComboBox<String>();
+		for (int i = 0; i < customer.getAccounts().size(); i++) {
+			box.addItem(customer.getAccounts().get(i).getNumber());
+		}
+
+		boxPanel.add(box);
+
+		Container contentPane = f.getContentPane();
+		contentPane.setLayout(new GridLayout(3, 1));
+		contentPane.add(labelPanel);
+		contentPane.add(boxPanel);
+		contentPane.add(buttonPanel);
+
+		returnButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				f.dispose();
+				menuStart();
+			}
+		});
+
+		continueButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				CustomerAccount selectedAccount = findSelectedAccount(customer, box.getSelectedItem());
+
+				if (selectedAccount == null) {
+					JOptionPane.showMessageDialog(f, "Could not find selected account.");
+					return;
+				}
+
+				f.dispose();
+				showCustomerOperationsMenu(customer, selectedAccount);
+			}
+		});
 	}
 
 	private CustomerAccount findSelectedAccount(Customer customer, Object selectedItem) {
