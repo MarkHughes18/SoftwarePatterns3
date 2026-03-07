@@ -1361,6 +1361,45 @@ public class Menu extends JFrame {
 	}
 
 	private void handleDisplayStatement(Customer customer, CustomerAccount account) {
+		f.dispose();
+
+		f = new JFrame("Customer Menu");
+		f.setSize(400, 600);
+		f.setLocation(200, 200);
+		f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
+		f.setVisible(true);
+
+		JLabel label1 = new JLabel("Summary of account transactions: ");
+
+		JButton returnButton = new JButton("Return");
+
+		JPanel textPanel = new JPanel(new BorderLayout());
+
+		JTextArea textArea = new JTextArea(40, 20);
+		textArea.setEditable(false);
+
+		textPanel.add(label1, BorderLayout.NORTH);
+		textPanel.add(new JScrollPane(textArea), BorderLayout.CENTER);
+		textPanel.add(returnButton, BorderLayout.SOUTH);
+
+		for (int i = 0; i < account.getTransactionList().size(); i++) {
+			textArea.append(account.getTransactionList().get(i).toString());
+		}
+
+		Container contentPane = f.getContentPane();
+		contentPane.setLayout(new GridLayout(1, 1));
+		contentPane.add(textPanel);
+
+		returnButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				f.dispose();
+				showCustomerOperationsMenu(customer, account);
+			}
+		});
 	}
 
 	private void handleLodgement(Customer customer, CustomerAccount account) {
