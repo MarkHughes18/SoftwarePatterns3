@@ -281,6 +281,49 @@ public class Menu extends JFrame {
 		f1.setVisible(true);
 	}
 
+	private void handleAddNewCustomer() {
+		PPS = pPSTextField.getText();
+		firstName = firstNameTextField.getText();
+		surname = surnameTextField.getText();
+		DOB = dOBTextField.getText();
+		password = "";
+
+		CustomerID = "ID" + PPS;
+
+		boolean loop = true;
+		while (loop) {
+			password = JOptionPane.showInputDialog(f1, "Enter 7 character Password;");
+
+			if (password == null) {
+				return;
+			}
+
+			if (password.length() != 7) {
+				JOptionPane.showMessageDialog(
+						f1,
+						"Password must be 7 characters long",
+						"Invalid Password",
+						JOptionPane.OK_OPTION);
+			} else {
+				loop = false;
+			}
+		}
+
+		ArrayList<CustomerAccount> accounts = new ArrayList<CustomerAccount>();
+		Customer customer = new Customer(PPS, surname, firstName, DOB, CustomerID, password, accounts);
+
+		customerList.add(customer);
+
+		JOptionPane.showMessageDialog(
+				f1,
+				"CustomerID = " + CustomerID + "\n Password = " + password,
+				"Customer created.",
+				JOptionPane.INFORMATION_MESSAGE);
+
+		f1.dispose();
+		menuStart();
+	}
+
 	public void admin() {
 		dispose();
 
