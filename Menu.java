@@ -1279,6 +1279,19 @@ public class Menu extends JFrame {
 	}
 
 	private CustomerAccount findSelectedAccount(Customer customer, Object selectedItem) {
+		if (selectedItem == null) {
+			return null;
+		}
+
+		String selectedAccountNumber = selectedItem.toString();
+
+		for (int i = 0; i < customer.getAccounts().size(); i++) {
+			CustomerAccount account = customer.getAccounts().get(i);
+			if (account.getNumber().equals(selectedAccountNumber)) {
+				return account;
+			}
+		}
+		return null;
 	}
 
 	private void showCustomerOperationsMenu(Customer customer, CustomerAccount account) {
