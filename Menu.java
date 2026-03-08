@@ -1413,45 +1413,8 @@ public class Menu extends JFrame {
 		boolean on = true;
 		double balance = 0;
 
-		if (account instanceof CustomerCurrentAccount) {
-			int count = 3;
-			int checkPin = ((CustomerCurrentAccount) account).getAtm().getPin();
-			loop = true;
-
-			while (loop) {
-				if (count == 0) {
-					JOptionPane.showMessageDialog(
-							f,
-							"Pin entered incorrectly 3 times. ATM card locked.",
-							"Pin",
-							JOptionPane.INFORMATION_MESSAGE);
-					((CustomerCurrentAccount) account).getAtm().setValid(false);
-					showCustomerOperationsMenu(customer, account);
-					loop = false;
-					on = false;
-				}
-
-				if (on) {
-					String pin = JOptionPane.showInputDialog(f, "Enter 4 digit PIN;");
-					int enteredPin = Integer.parseInt(pin);
-
-					if (checkPin == enteredPin) {
-						loop = false;
-						JOptionPane.showMessageDialog(
-								f,
-								"Pin entry successful",
-								"Pin",
-								JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						count--;
-						JOptionPane.showMessageDialog(
-								f,
-								"Incorrect pin. " + count + " attempts remaining.",
-								"Pin",
-								JOptionPane.INFORMATION_MESSAGE);
-					}
-				}
-			}
+		if (!authenticatePinIfRequired(customer, account)) {
+			return;
 		}
 
 		if (on) {
@@ -1484,49 +1447,11 @@ public class Menu extends JFrame {
 	}
 
 	private void handleWithdrawal(Customer customer, CustomerAccount account) {
-		boolean loop = true;
 		boolean on = true;
 		double withdraw = 0;
 
-		if (account instanceof CustomerCurrentAccount) {
-			int count = 3;
-			int checkPin = ((CustomerCurrentAccount) account).getAtm().getPin();
-			loop = true;
-
-			while (loop) {
-				if (count == 0) {
-					JOptionPane.showMessageDialog(
-							f,
-							"Pin entered incorrectly 3 times. ATM card locked.",
-							"Pin",
-							JOptionPane.INFORMATION_MESSAGE);
-					((CustomerCurrentAccount) account).getAtm().setValid(false);
-					showCustomerOperationsMenu(customer, account);
-					loop = false;
-					on = false;
-				}
-
-				if (on) {
-					String pin = JOptionPane.showInputDialog(f, "Enter 4 digit PIN;");
-					int enteredPin = Integer.parseInt(pin);
-
-					if (checkPin == enteredPin) {
-						loop = false;
-						JOptionPane.showMessageDialog(
-								f,
-								"Pin entry successful",
-								"Pin",
-								JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						count--;
-						JOptionPane.showMessageDialog(
-								f,
-								"Incorrect pin. " + count + " attempts remaining.",
-								"Pin",
-								JOptionPane.INFORMATION_MESSAGE);
-					}
-				}
-			}
+		if (!authenticatePinIfRequired(customer, account)) {
+			return;
 		}
 
 		if (on) {
@@ -1566,5 +1491,71 @@ public class Menu extends JFrame {
 			return false;
 		}
 		return true;
+	}
+
+	private boolean authenticatePinIfRequired(Customer customer, CustomerAccount account) {
+		if (!(account instanceof CustomerCurrentAccount)) {
+			return true;
+		}
+
+		CustomerCurrentAccount currentAccount = (CustomerCurrentAccount) account;
+
+		if (!currentAccount.getAtm().getValid()) {
+			JOptionPane.showMessageDialog(
+					f,
+					"This ATM card is locked.",
+					"Pin",
+					JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}
+
+		int count = 3;
+		int correctPin = currentAccount.getAtm().getPin();
+
+		while (count > 0) {
+			String pinText = JOptionPane.showInputDialog(f, "Enter 4 digit PIN;");
+
+			if (pinText == null) {
+				return false;
+			}
+
+			if (!isNumeric(pinText)) {
+				JOptionPane.showMessageDialog(
+						f,
+						"PIN must be numeric.",
+						"Pin",
+						JOptionPane.INFORMATION_MESSAGE);
+				continue;
+			}
+
+			int enteredPin = Integer.parseInt(pinText);
+
+			if (enteredPin == correctPin) {
+				JOptionPane.showMessageDialog(
+						f,
+						"Pin entry successful",
+						"Pin",
+						JOptionPane.INFORMATION_MESSAGE);
+				return true;
+			}
+
+			count--;
+			if (count > 0) {
+				JOptionPane.showMessageDialog(
+						f,
+						"Incorrect pin. " + count + " attempts remaining.",
+						"Pin",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+
+		currentAccount.getAtm().setValid(false);
+		JOptionPane.showMessageDialog(
+				f,
+				"Pin entered incorrectly 3 times. ATM card locked.",
+				"Pin",
+				JOptionPane.INFORMATION_MESSAGE);
+		showCustomerOperationsMenu(customer, account);
+		return false;
 	}
 }
