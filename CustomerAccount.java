@@ -65,4 +65,10 @@ public class CustomerAccount {
 		addTransaction("Withdraw", amount);
 	}
 
+	public void applyBankCharge() {
+	}
+
+	public void applyInterest(double rate) {
+	}
+
 }

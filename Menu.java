@@ -534,25 +534,26 @@ public class Menu extends JFrame {
 
 						continueButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent ae) {
-								String euro = "\u20ac";
+								CustomerAccount selectedAccount = findSelectedAccount(customer, box.getSelectedItem());
 
-								if (acc instanceof CustomerDepositAccount) {
-
-									JOptionPane.showMessageDialog(f, "25" + euro + " deposit account fee aplied.", "",
-											JOptionPane.INFORMATION_MESSAGE);
-									acc.setBalance(acc.getBalance() - 25);
-									JOptionPane.showMessageDialog(f, "New balance = " + acc.getBalance(), "Success!",
-											JOptionPane.INFORMATION_MESSAGE);
+								if (selectedAccount == null) {
+									JOptionPane.showMessageDialog(f, "Could not find selected account.");
+									return;
 								}
 
-								if (acc instanceof CustomerCurrentAccount) {
+								selectedAccount.applyBankCharge();
 
-									JOptionPane.showMessageDialog(f, "15" + euro + " current account fee aplied.", "",
-											JOptionPane.INFORMATION_MESSAGE);
-									acc.setBalance(acc.getBalance() - 25);
-									JOptionPane.showMessageDialog(f, "New balance = " + acc.getBalance(), "Success!",
-											JOptionPane.INFORMATION_MESSAGE);
-								}
+								JOptionPane.showMessageDialog(
+										f,
+										"Bank charge applied.",
+										"Success!",
+										JOptionPane.INFORMATION_MESSAGE);
+
+								JOptionPane.showMessageDialog(
+										f,
+										"New balance = " + selectedAccount.getBalance(),
+										"Success!",
+										JOptionPane.INFORMATION_MESSAGE);
 
 								f.dispose();
 								admin();
@@ -683,7 +684,7 @@ public class Menu extends JFrame {
 										interest = Double.parseDouble(interestString);
 										loop = false;
 
-										acc.setBalance(acc.getBalance() + (acc.getBalance() * (interest / 100)));
+										acc.applyInterest(interest);
 
 										JOptionPane
 												.showMessageDialog(f,
