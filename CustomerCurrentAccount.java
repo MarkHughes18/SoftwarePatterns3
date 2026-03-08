@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class CustomerCurrentAccount extends CustomerAccount {
-	ATMCard atm;
+	private ATMCard atm;
 
 	public CustomerCurrentAccount() {
 		super();
@@ -25,7 +25,7 @@ public class CustomerCurrentAccount extends CustomerAccount {
 
 	@Override
 	public void applyBankCharge() {
-		balance -= 15;
+		setBalance(getBalance() - 15);
 	}
 
 }

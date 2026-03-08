@@ -3,15 +3,15 @@ import java.util.Date;
 
 public class CustomerAccount {
 
-	String number;
-	double balance;
-	ArrayList<AccountTransaction> transactionList = new ArrayList<AccountTransaction>();
+	private String number;
+	private double balance;
+	private ArrayList<AccountTransaction> transactionList = new ArrayList<AccountTransaction>();
 
 	// Blank Constructor
 	public CustomerAccount() {
 		this.number = "";
 		this.balance = 0;
-		this.transactionList = null;
+		this.transactionList = new ArrayList<AccountTransaction>();
 	}
 
 	// Constructor with Details
@@ -31,7 +31,7 @@ public class CustomerAccount {
 		return this.balance;
 	}
 
-	public ArrayList getTransactionList() {
+	public ArrayList<AccountTransaction> getTransactionList() {
 		return this.transactionList;
 	}
 
@@ -44,7 +44,7 @@ public class CustomerAccount {
 		this.balance = balance;
 	}
 
-	public void setTransactionList(ArrayList transactionList) {
+	public void setTransactionList(ArrayList<AccountTransaction> transactionList) {
 		this.transactionList = transactionList;
 	}
 

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class CustomerDepositAccount extends CustomerAccount {
-	double interestRate;
+	private double interestRate;
 
 	public CustomerDepositAccount() {
 		super();
@@ -24,12 +24,12 @@ public class CustomerDepositAccount extends CustomerAccount {
 
 	@Override
 	public void applyBankCharge() {
-		balance -= 25;
+		setBalance(getBalance() - 25);
 	}
 
 	@Override
 	public void applyInterest(double rate) {
-		balance += balance * (rate / 100);
+		setBalance(getBalance() + getBalance() * (rate / 100));
 	}
 
 }

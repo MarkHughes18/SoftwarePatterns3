@@ -1409,7 +1409,6 @@ public class Menu extends JFrame {
 	}
 
 	private void handleLodgement(Customer customer, CustomerAccount account) {
-		boolean loop = true;
 		boolean on = true;
 		double balance = 0;
 
