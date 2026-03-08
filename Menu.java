@@ -223,6 +223,15 @@ public class Menu extends JFrame {
 		}
 	}
 
+	private Customer findCustomerById(String customerId) {
+		for (Customer aCustomer : customerList) {
+			if (aCustomer.getCustomerID().equals(customerId)) {
+				return aCustomer;
+			}
+		}
+		return null;
+	}
+
 	private void handleNewCustomerSelection() {
 		f.dispose();
 		f1 = new JFrame("Create new Customer");
@@ -1457,13 +1466,7 @@ public class Menu extends JFrame {
 				String euro = "\u20ac";
 				account.setBalance(account.getBalance() + balance);
 
-				Date date = new Date();
-				String date2 = date.toString();
-				String type = "Lodgement";
-				double amount = balance;
-
-				AccountTransaction transaction = new AccountTransaction(date2, type, amount);
-				account.getTransactionList().add(transaction);
+				account.addTransaction("Lodgement", balance);
 
 				JOptionPane.showMessageDialog(
 						f,
@@ -1540,13 +1543,7 @@ public class Menu extends JFrame {
 				String euro = "\u20ac";
 				account.setBalance(account.getBalance() + balance);
 
-				Date date = new Date();
-				String date2 = date.toString();
-				String type = "Lodgement";
-				double amount = balance;
-
-				AccountTransaction transaction = new AccountTransaction(date2, type, amount);
-				account.getTransactionList().add(transaction);
+				account.addTransaction("Withdraw", balance);
 
 				JOptionPane.showMessageDialog(
 						f,
@@ -1566,5 +1563,15 @@ public class Menu extends JFrame {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
+
+	}
+
+	public static boolean isNumeric(String str) {
+		try {
+			double d = Double.parseDouble(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 }
