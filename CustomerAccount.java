@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CustomerAccount {
 
@@ -45,6 +46,23 @@ public class CustomerAccount {
 
 	public void setTransactionList(ArrayList transactionList) {
 		this.transactionList = transactionList;
+	}
+
+	public void addTransaction(String type, double amount) {
+		Date date = new Date();
+		String dateString = date.toString();
+		AccountTransaction transaction = new AccountTransaction(dateString, type, amount);
+		transactionList.add(transaction);
+	}
+
+	public void lodge(double amount) {
+		balance += amount;
+		addTransaction("Lodgement", amount);
+	}
+
+	public void withdraw(double amount) {
+		balance -= amount;
+		addTransaction("Withdraw", amount);
 	}
 
 }

@@ -10,10 +10,6 @@ import java.text.SimpleDateFormat;
 import javax.swing.text.MaskFormatter;
 import java.util.ArrayList;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 public class Menu extends JFrame {
 
 	private ArrayList<Customer> customerList = new ArrayList<Customer>();
@@ -1464,9 +1460,7 @@ public class Menu extends JFrame {
 				balance = Double.parseDouble(balanceTest);
 
 				String euro = "\u20ac";
-				account.setBalance(account.getBalance() + balance);
-
-				account.addTransaction("Lodgement", balance);
+				account.lodge(balance);
 
 				JOptionPane.showMessageDialog(
 						f,
@@ -1491,7 +1485,7 @@ public class Menu extends JFrame {
 	private void handleWithdrawal(Customer customer, CustomerAccount account) {
 		boolean loop = true;
 		boolean on = true;
-		double balance = 0;
+		double withdraw = 0;
 
 		if (account instanceof CustomerCurrentAccount) {
 			int count = 3;
@@ -1535,25 +1529,23 @@ public class Menu extends JFrame {
 		}
 
 		if (on) {
-			String balanceTest = JOptionPane.showInputDialog(f, "Enter amount you wish to lodge:");
+			String balanceTest = JOptionPane.showInputDialog(f, "Enter amount you wish to withdraw:");
 
 			if (isNumeric(balanceTest)) {
-				balance = Double.parseDouble(balanceTest);
+				withdraw = Double.parseDouble(balanceTest);
 
 				String euro = "\u20ac";
-				account.setBalance(account.getBalance() + balance);
-
-				account.addTransaction("Withdraw", balance);
+				account.withdraw(withdraw);
 
 				JOptionPane.showMessageDialog(
 						f,
-						balance + euro + " added do you account!",
-						"Lodgement",
+						withdraw + euro + " withdrawn from your account!",
+						"Withdrawal",
 						JOptionPane.INFORMATION_MESSAGE);
 				JOptionPane.showMessageDialog(
 						f,
 						"New balance = " + account.getBalance() + euro,
-						"Lodgement",
+						"Withdrawal",
 						JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(
