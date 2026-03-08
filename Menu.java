@@ -1486,5 +1486,85 @@ public class Menu extends JFrame {
 	}
 
 	private void handleWithdrawal(Customer customer, CustomerAccount account) {
+		boolean loop = true;
+		boolean on = true;
+		double balance = 0;
+
+		if (account instanceof CustomerCurrentAccount) {
+			int count = 3;
+			int checkPin = ((CustomerCurrentAccount) account).getAtm().getPin();
+			loop = true;
+
+			while (loop) {
+				if (count == 0) {
+					JOptionPane.showMessageDialog(
+							f,
+							"Pin entered incorrectly 3 times. ATM card locked.",
+							"Pin",
+							JOptionPane.INFORMATION_MESSAGE);
+					((CustomerCurrentAccount) account).getAtm().setValid(false);
+					showCustomerOperationsMenu(customer, account);
+					loop = false;
+					on = false;
+				}
+
+				if (on) {
+					String pin = JOptionPane.showInputDialog(f, "Enter 4 digit PIN;");
+					int enteredPin = Integer.parseInt(pin);
+
+					if (checkPin == enteredPin) {
+						loop = false;
+						JOptionPane.showMessageDialog(
+								f,
+								"Pin entry successful",
+								"Pin",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						count--;
+						JOptionPane.showMessageDialog(
+								f,
+								"Incorrect pin. " + count + " attempts remaining.",
+								"Pin",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+			}
+		}
+
+		if (on) {
+			String balanceTest = JOptionPane.showInputDialog(f, "Enter amount you wish to lodge:");
+
+			if (isNumeric(balanceTest)) {
+				balance = Double.parseDouble(balanceTest);
+
+				String euro = "\u20ac";
+				account.setBalance(account.getBalance() + balance);
+
+				Date date = new Date();
+				String date2 = date.toString();
+				String type = "Lodgement";
+				double amount = balance;
+
+				AccountTransaction transaction = new AccountTransaction(date2, type, amount);
+				account.getTransactionList().add(transaction);
+
+				JOptionPane.showMessageDialog(
+						f,
+						balance + euro + " added do you account!",
+						"Lodgement",
+						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(
+						f,
+						"New balance = " + account.getBalance() + euro,
+						"Lodgement",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(
+						f,
+						"You must enter a numerical value!",
+						"Oops!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
 	}
 }
